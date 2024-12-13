@@ -828,11 +828,15 @@ namespace CalRemix
             {
                 npcLoot.Add(ItemType<EssenceofBabil>(), 3);
             }
-            if (CalamityLists.dungeonEnemyBuffList.Contains(npc.type) || npc.type == NPCID.AngryBones || npc.type == NPCID.DarkCaster || npc.type == NPCID.CursedSkull || npc.type == NPCID.HeavySkeleton || npc.type == NPCID.BigBoned || npc.type == NPCID.ShortBones || npc.type == NPCID.AngryBonesBigMuscle || npc.type == NPCID.AngryBonesBigHelmet)
+            if ((CalamityLists.dungeonEnemyBuffList.Contains(npc.type) && !npc.type == NPCID.Paladin) || CalamityLists.angryBonesList.Contains(npc.type) || npc.type == NPCID.DarkCaster || npc.type == NPCID.CursedSkull)
             {
                 LeadingConditionRule hm = new LeadingConditionRule(new Conditions.IsHardmode());
                 hm.Add(ItemType<EssenceofRend>(), 4, hideLootReport: !Main.hardMode);
                 npcLoot.Add(hm);
+            }
+            if (npc.type == NPCID.Paladin)
+            {
+                npc.Add(ItemType<EssenceofRend>(), 1, 2, 5);
             }
             if (npc.type == NPCID.Wolf)
             {
