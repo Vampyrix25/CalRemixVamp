@@ -828,6 +828,12 @@ namespace CalRemix
             {
                 npcLoot.Add(ItemType<EssenceofBabil>(), 3);
             }
+            if (CalamityLists.dungeonEnemyBuffList.Contains(npc.type))
+            {
+                LeadingConditionRule hm = new LeadingConditionRule(new Conditions.IsHardmode());
+                hm.Add(ItemType<EssenceofRend>(), 4, hideLootReport: !Main.hardMode);
+                npcLoot.Add(hm);
+            }
             if (npc.type == NPCID.Wolf)
             {
                 LeadingConditionRule postPolter = new LeadingConditionRule(new Conditions.IsExpert());
