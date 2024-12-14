@@ -837,7 +837,7 @@ namespace CalRemix
             }
             if (npc.type == NPCID.Paladin)
             {
-                npc.Add(ItemType<EssenceofRend>(), 1, 2, 5);
+                npcLoot.Add(ItemType<EssenceofRend>(), 1, 2, 5);
             }
             if (npc.type == NPCID.Wolf)
             {
