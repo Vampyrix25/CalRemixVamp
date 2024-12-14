@@ -29,8 +29,8 @@ namespace CalRemix.Content.Items.Accessories
         {
             CalRemixPlayer modPlayer = player.GetModPlayer<CalRemixPlayer>();
             modPlayer.GiftRed = true;
-            player.GetDamage<SummonDamageClass> += 0.12f
-            player.endurance += 0.05f
+            player.GetDamage<SummonDamageClass> += 0.12f;
+            player.endurance += 0.05f;
         }
     }
 }
