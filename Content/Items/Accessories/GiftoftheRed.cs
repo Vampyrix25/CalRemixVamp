@@ -31,6 +31,7 @@ namespace CalRemix.Content.Items.Accessories
             modPlayer.GiftRed = true;
             player.GetDamage<SummonDamageClass>() += 0.12f;
             player.endurance += 0.05f;
+            player.maxMinions += 2;
         }
     }
 }
