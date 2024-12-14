@@ -991,6 +991,13 @@ namespace CalRemix
                 target.AddBuff(BuffType<Wither>(), 120);
                 target.GetGlobalNPC<CalRemixNPC>().wither = helmet.souls;
             }
+            if (GiftRed && proj.DamageType == DamageClass.Summon)
+            {
+                if (Main.rand.NextBool(20))
+                {
+                    target.AddBuff(BuffID.Confused, 5, false);
+                }
+            }
         }
 
 		public override void ModifyHitByNPC(NPC npc, ref Player.HurtModifiers modifiers)
