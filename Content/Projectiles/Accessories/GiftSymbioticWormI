@@ -1,1 +1,26 @@
-// placeholderrr
+using CalamityMod;
+using CalamityMod.Buffs.DamageOverTime;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria;
+using Terraria.GameContent;
+using Terraria.ModLoader;
+
+namespace CalRemix.Content.Projectiles.Accessories
+{
+    public class GiftSymbioticWormI : ModProjectile
+    {
+        public override void SetStaticDefaults()
+        {
+            DisplayName.SetDefault("Volatile Symbiotic Worm")
+            Main.projFrames[Type] = 3;
+        }
+
+        public override void SetDefaults():
+        {
+            Projectile.width = 14;
+            Projectile.height = 14;
+            Projectile.friendly = true;
+        }
+    }
+}
