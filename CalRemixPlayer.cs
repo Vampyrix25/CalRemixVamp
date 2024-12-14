@@ -180,7 +180,7 @@ namespace CalRemix
         public Particle ring2;
         public Particle aura;
 
- 	public bool GiftRed;
+ 	    public bool GiftRed;
 
         // Weapons
         public int chainSawCharge;
@@ -887,7 +887,7 @@ namespace CalRemix
 			dyesBrown = 0;
 			dyesPink = 0;
             retroman = false;
-	    		GiftRed = false;
+	    	GiftRed = false;
 
             if (!Player.HasBuff<Calamitized>() && !NPC.AnyNPCs(NPCType<TheCalamity>()))
             {
@@ -993,9 +993,19 @@ namespace CalRemix
             }
             if (GiftRed && proj.DamageType == DamageClass.Summon)
             {
-                if (Main.rand.NextBool(20))
+                var source = proj.GetSource_FromThis();
+                Vector2 minionCenter = proj.Center;
+                Vector2 playerCenter = Main.LocalPlayer.Center;
+                int projType = proj.type;
+                if (Main.rand.NextBool(5))
                 {
                     target.AddBuff(BuffID.Confused, 300, false);
+                }
+                if (Main.rand.NextBool(5))
+                {
+                    proj.Kill();
+                    Projectile.NewProjectile(Player.GetSource_FromThis(), playerCenter, playerCenter, projType, 22, 0);
+                    Projectile.NewProjectile(source, minionCenter, minionCenter, ProjectileType<CalamityMod.Projectiles.Melee.CosmicIceBurst>(), 22, 0);
                 }
             }
         }
