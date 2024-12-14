@@ -180,6 +180,8 @@ namespace CalRemix
         public Particle ring2;
         public Particle aura;
 
+ 	public bool GiftRed;
+
         // Weapons
         public int chainSawCharge;
         public int chainSawHitCooldown = 0;
@@ -885,6 +887,7 @@ namespace CalRemix
 			dyesBrown = 0;
 			dyesPink = 0;
             retroman = false;
+	    		GiftRed = false;
 
             if (!Player.HasBuff<Calamitized>() && !NPC.AnyNPCs(NPCType<TheCalamity>()))
             {
