@@ -995,7 +995,7 @@ namespace CalRemix
             {
                 if (Main.rand.NextBool(20))
                 {
-                    target.AddBuff(BuffID.Confused, 5, false);
+                    target.AddBuff(BuffID.Confused, 300, false);
                 }
             }
         }
