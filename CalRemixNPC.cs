@@ -51,6 +51,7 @@ using CalRemix.Content.Items.Materials;
 using CalRemix.Content.Items.Misc;
 using CalRemix.Content.Items.Pets;
 using CalRemix.Content.Items.Placeables;
+using CalRemix.Content.Items.Placeables.MusicBoxes;
 using CalRemix.Content.Items.Potions;
 using CalRemix.Content.Items.Potions.Recovery;
 using CalRemix.Content.Items.Weapons;
@@ -827,6 +828,16 @@ namespace CalRemix
             if (npc.type == NPCID.AngryTrapper || CalamityLists.mossHornetList.Contains(npc.type) || npc.type == NPCID.Derpling)
             {
                 npcLoot.Add(ItemType<EssenceofBabil>(), 3);
+            }
+            if ((CalamityLists.dungeonEnemyBuffList.Contains(npc.type) && !npc.type == NPCID.Paladin) || CalamityLists.angryBonesList.Contains(npc.type) || npc.type == NPCID.DarkCaster || npc.type == NPCID.CursedSkull)
+            {
+                LeadingConditionRule hm = new LeadingConditionRule(new Conditions.IsHardmode());
+                hm.Add(ItemType<EssenceofRend>(), 4, hideLootReport: !Main.hardMode);
+                npcLoot.Add(hm);
+            }
+            if (npc.type == NPCID.Paladin)
+            {
+                npc.Add(ItemType<EssenceofRend>(), 1, 2, 5);
             }
             if (npc.type == NPCID.Wolf)
             {

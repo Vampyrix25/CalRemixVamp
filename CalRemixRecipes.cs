@@ -28,6 +28,7 @@ using CalRemix.Content.Items.Weapons;
 using CalamityMod.Items.Weapons.Summon;
 using CalamityMod.Items.Armor.PlagueReaper;
 using CalamityMod.Items.Armor.Fearmonger;
+using CalamityMod.Items.Armor.Umbraphile;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -51,7 +52,7 @@ namespace CalRemix
 {
     public partial class Recipes : ModSystem
     {
-        public static RecipeGroup GreaterEvil, EvilBar, T4Bar, HMT1Bar, AnyButterfly;
+        public static RecipeGroup GreaterEvil, EvilBar, T4Bar, HMT1Bar, AnyButterfly, AnyExoMechMusicBox;
         public override void Unload()
         {
             GreaterEvil = null;
@@ -59,6 +60,7 @@ namespace CalRemix
             T4Bar = null;
             HMT1Bar = null;
             AnyButterfly = null;
+            AnyExoMechMusicBox = null;
         }
         public override void AddRecipeGroups()
         {
@@ -72,6 +74,8 @@ namespace CalRemix
             RecipeGroup.RegisterGroup("CalRemix:HMT1Bar", HMT1Bar);
             AnyButterfly = new RecipeGroup(() => "Any Normal Butterfly", ItemID.MonarchButterfly, ItemID.SulphurButterfly, ItemID.ZebraSwallowtailButterfly, ItemID.UlyssesButterfly, ItemID.JuliaButterfly, ItemID.RedAdmiralButterfly, ItemID.PurpleEmperorButterfly, ItemID.TreeNymphButterfly);
             RecipeGroup.RegisterGroup("CalRemix:AnyButterfly", AnyButterfly);
+            AnyExoMechMusicBox = new RecipeGroup(() => "Any Remix Exo Mech Music Box", RemixMusicBox.ExoMechMusicBoxes);
+            RecipeGroup.RegisterGroup("CalRemix:AnyRemixExoMusicBox", AnyExoMechMusicBox);
         }
         public override void AddRecipes()
         {
@@ -196,6 +200,11 @@ namespace CalRemix
             .AddIngredient(music.Find<ModItem>("SulphurousSeaNightMusicBox").Type)
             .AddTile(TileID.TinkerersWorkbench)
             .Register();
+
+            Recipe.Create(music.Find<ModItem>("ExoMechsMusicBox").Type)
+            .AddRecipeGroup("CalRemix:AnyRemixExoMusicBox")
+            .AddTile(TileID.TinkerersWorkbench)
+            .Register();
             #endregion
             #region DP stuff
             // Alcohol...
@@ -242,6 +251,7 @@ namespace CalRemix
                 {
                     recipe.RemoveIngredient(ItemType<AshesofCalamity>());
                     recipe.AddIngredient(ItemType<CoreofBabil>(), 3);
+                    recipe.AddIngredient(ItemType<CoreofRend>(), 3);
                     recipe.AddIngredient(ItemType<UnholyCore>());
                 }
                 if (recipe.HasResult(ItemType<AngelicShotgun>()))
@@ -390,6 +400,18 @@ namespace CalRemix
                 if (recipe.HasResult(ItemType<EmpyreanCuisses>()))
                 {
                     recipe.AddIngredient(ItemType<CoreofBabil>(), 3);
+                }
+                if (recipe.HasResult(ItemType<UmbraphileHood>()))
+                {
+                    recipe.AddIngredient(ItemType<EssenceofRend>(), 3);
+                }
+                if (recipe.HasResult(ItemType<UmbraphileRegalia>()))
+                {
+                    recipe.AddIngredient(ItemType<EssenceofRend>(), 8);
+                }
+                if (recipe.HasResult(ItemType<UmbraphileBoots>()))
+                {
+                    recipe.AddIngredient(ItemType<EssenceofRend>(), 5);
                 }
                 if (recipe.HasResult(ItemType<ClaretCannon>()))
                 {
