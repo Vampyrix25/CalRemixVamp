@@ -3,6 +3,7 @@ using CalamityMod.Buffs.DamageOverTime;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 
@@ -12,7 +13,7 @@ namespace CalRemix.Content.Projectiles.Accessories
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Ichor Splatter")
+            DisplayName.SetDefault("Ichor Splatter");
             Main.projFrames[Type] = 4;
         }
         public override void SetDefaults()

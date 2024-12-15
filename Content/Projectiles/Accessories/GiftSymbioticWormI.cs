@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
+using CalRemix.Content.Projectiles.Accessories;
 
 namespace CalRemix.Content.Projectiles.Accessories
 {
@@ -12,7 +13,7 @@ namespace CalRemix.Content.Projectiles.Accessories
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Volatile Symbiotic Worm")
+            DisplayName.SetDefault("Volatile Symbiotic Worm");
             Main.projFrames[Type] = 4;
         }
 
@@ -24,6 +25,8 @@ namespace CalRemix.Content.Projectiles.Accessories
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 8;
             Projectile.timeLeft = 120;
+            Projectile.penetrate = -1;
+            Projectile.maxPenetrate = -1;
         }
         public override void AI()
         {
@@ -33,21 +36,21 @@ namespace CalRemix.Content.Projectiles.Accessories
             NPC npc = Main.npc[index];
             if (npc != null)
                 Projectile.velocity = Projectile.DirectionTo(npc.Center) * 8f;
+            if (Projectile.timeLeft < 3)
+            {
+                IchorSplatter();
+            }
         }
         private void IchorSplatter()
         {
             Player player = Main.player[Projectile.owner];
-            int damage = (int)player.GetTotalDamage<SummonerDamageClass>().ApplyTo(30);
+            int damage = (int)player.GetTotalDamage<SummonDamageClass>().ApplyTo(30);
             damage = player.ApplyArmorAccDamageBonusesTo(damage);
             if(Main.myPlayer == Projectile.owner)
             {
-                int splatter = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ProjectileType<CalRemix.Content.Projectiles.Accessories.GiftIchor>(), damage, 0, player);
+                int splatter = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<GiftIchor>(), damage, 0, Projectile.owner);
             }
             Projectile.Kill();
-        }
-        if (Projectile.timeLeft < 3)
-        {
-            Projectile.IchorSplatter();
         }
         public override bool PreDraw(ref Color lightColor)
         {

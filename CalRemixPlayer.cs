@@ -991,7 +991,7 @@ namespace CalRemix
                 target.AddBuff(BuffType<Wither>(), 120);
                 target.GetGlobalNPC<CalRemixNPC>().wither = helmet.souls;
             }
-            if (GiftRed && proj.DamageType == DamageClass.Summon && !(proj.type == ProjectileType<CalRemix.Content.Projectiles.Accessories.GiftSymbioticWormH>() || proj.type == ProjectileType<CalRemix.Content.Projectiles.Accessories.GiftSymbioticWormI>()))
+            if (GiftRed && proj.DamageType == DamageClass.Summon && !(proj.type == ProjectileType<GiftSymbioticWormH>() || proj.type == ProjectileType<GiftSymbioticWormI>()))
             {
                 var source = proj.GetSource_FromThis();
                 Vector2 minionCenter = proj.Center;
@@ -1008,9 +1008,9 @@ namespace CalRemix
                 {
                     proj.Kill();
                     Projectile.NewProjectile(Player.GetSource_FromThis(), playerCenter, playerCenter, projType, 22, 0);
-                    Projectile.NewProjectile(source, minionCenter, Adj1, ProjectileType<CalRemix.Content.Projectiles.Accessories.GiftSymbioticWormH>(), 5, 0);
-                    Projectile.NewProjectile(source, minionCenter, Adj2, ProjectileType<CalRemix.Content.Projectiles.Accessories.GiftSymbioticWormH>(), 5, 0);
-                    Projectile.NewProjectile(source, minionCenter, Adj3, ProjectileType<CalRemix.Content.Projectiles.Accessories.GiftSymbioticWormI>(), 5, 0);
+                    Projectile.NewProjectile(source, minionCenter, Adj1, ProjectileType<GiftSymbioticWormH>(), 5, 0);
+                    Projectile.NewProjectile(source, minionCenter, Adj2, ProjectileType<GiftSymbioticWormH>(), 5, 0);
+                    Projectile.NewProjectile(source, minionCenter, Adj3, ProjectileType<GiftSymbioticWormI>(), 5, 0);
                 }
             }
         }
