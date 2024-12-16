@@ -996,21 +996,18 @@ namespace CalRemix
                 var source = proj.GetSource_FromThis();
                 Vector2 minionCenter = proj.Center;
                 Vector2 playerCenter = Main.LocalPlayer.Center;
-                Vector2 Adj1 = new Vector2(-1,-1);
-                Vector2 Adj2 = new Vector2(1,0);
-                Vector2 Adj3 = new Vector2(0,-1);
                 int projType = proj.type;
                 if (Main.rand.NextBool(5))
                 {
                     target.AddBuff(BuffID.Confused, 300, false);
                 }
-                if (Main.rand.NextBool(15))
+                if (Main.rand.NextBool(5))
                 {
                     proj.Kill();
                     Projectile.NewProjectile(Player.GetSource_FromThis(), playerCenter, playerCenter, projType, 22, 0);
-                    Projectile.NewProjectile(source, minionCenter, Adj1, ProjectileType<GiftSymbioticWormH>(), 5, 0);
-                    Projectile.NewProjectile(source, minionCenter, Adj2, ProjectileType<GiftSymbioticWormH>(), 5, 0);
-                    Projectile.NewProjectile(source, minionCenter, Adj3, ProjectileType<GiftSymbioticWormI>(), 5, 0);
+                    Projectile.NewProjectile(source, (float)minionCenter.X, (float)minionCenter.Y, -5, -5, ProjectileType<GiftSymbioticWormH>(), 5, 0);
+                    Projectile.NewProjectile(source, (float)minionCenter.X, (float)minionCenter.Y, 5, 0, ProjectileType<GiftSymbioticWormH>(), 5, 0);
+                    Projectile.NewProjectile(source, (float)minionCenter.X, (float)minionCenter.Y, 0, -5, ProjectileType<GiftSymbioticWormI>(), 5, 0);
                 }
             }
         }
