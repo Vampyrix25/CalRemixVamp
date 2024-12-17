@@ -991,20 +991,18 @@ namespace CalRemix
                 target.AddBuff(BuffType<Wither>(), 120);
                 target.GetGlobalNPC<CalRemixNPC>().wither = helmet.souls;
             }
-            if (GiftRed && proj.DamageType == DamageClass.Summon && !(proj.type == ProjectileType<GiftSymbioticWormH>() || proj.type == ProjectileType<GiftSymbioticWormI>()))
+            if (GiftRed && proj.DamageType == DamageClass.Summon && proj.minion == true)
             {
                 var source = proj.GetSource_FromThis();
                 Vector2 minionCenter = proj.Center;
                 Vector2 playerCenter = Main.LocalPlayer.Center;
-                int projType = proj.type;
                 if (Main.rand.NextBool(5))
                 {
                     target.AddBuff(BuffID.Confused, 300, false);
                 }
-                if (Main.rand.NextBool(5))
+                if (Main.rand.NextBool(15))
                 {
                     proj.Kill();
-                    Projectile.NewProjectile(Player.GetSource_FromThis(), playerCenter, playerCenter, projType, 22, 0);
                     Projectile.NewProjectile(source, (float)minionCenter.X, (float)minionCenter.Y, -5, -5, ProjectileType<GiftSymbioticWormH>(), 5, 0);
                     Projectile.NewProjectile(source, (float)minionCenter.X, (float)minionCenter.Y, 5, 0, ProjectileType<GiftSymbioticWormH>(), 5, 0);
                     Projectile.NewProjectile(source, (float)minionCenter.X, (float)minionCenter.Y, 0, -5, ProjectileType<GiftSymbioticWormI>(), 5, 0);

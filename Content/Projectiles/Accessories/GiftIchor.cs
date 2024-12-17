@@ -14,20 +14,21 @@ namespace CalRemix.Content.Projectiles.Accessories
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Ichor Splatter");
-            Main.projFrames[Type] = 4;
         }
         public override void SetDefaults()
         {
-            Projectile.width = 30;
-            Projectile.height = 30;
+            Projectile.width = 90;
+            Projectile.height = 90;
             Projectile.friendly = true;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 8;
-            Projectile.timeLeft = 10;
+            Projectile.timeLeft = 30;
+            Projectile.penetrate = -1;
+            Projectile.maxPenetrate = -1;
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            target.AddBuff(BuffID.Ichor, 60);
+            target.AddBuff(BuffID.Ichor, 600);
         }
     }
 }

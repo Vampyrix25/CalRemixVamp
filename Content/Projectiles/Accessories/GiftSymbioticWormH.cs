@@ -23,9 +23,10 @@ namespace CalRemix.Content.Projectiles.Accessories
             Projectile.friendly = true;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 8;
-            Projectile.timeLeft = 300;
+            Projectile.timeLeft = 450;
             Projectile.penetrate = -1;
             Projectile.maxPenetrate = -1;
+            Projectile.tileCollide = false;
         }
         public override void AI()
         {
@@ -34,12 +35,27 @@ namespace CalRemix.Content.Projectiles.Accessories
                 return;
             NPC npc = Main.npc[index];
             if (npc != null)
-                Projectile.velocity = Projectile.DirectionTo(npc.Center) * 8f;
+            {
+                Vector2 there = npc.Center - Projectile.Center;
+                Vector2 steer = (Vector2)Projectile.DirectionTo(npc.Center) * (float)there.Length() * 0.003f;
+                Vector2 velo = (Vector2)Projectile.velocity;
+                float veloBig = velo.Length();
+                Projectile.velocity = velo + steer;
+                if (veloBig > 8.5)
+                {
+                    Projectile.velocity = Projectile.velocity * 0.99f;
+                }
+            }
+            if (Projectile.timeLeft < 400)
+            {
+                Projectile.StickyProjAI(10);
+            }
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             target.AddBuff(ModContent.BuffType<BrimstoneFlames>(), 60);
         }
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => Projectile.ModifyHitNPCSticky(100);
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Type].Value;
