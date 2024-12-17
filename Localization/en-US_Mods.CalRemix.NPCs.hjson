@@ -185,7 +185,7 @@ FBIGUY: {
 	Census.SpawnCondition: Conditions unknown
 }
 
-Acideye: {
+AcidEye: {
 	DisplayName: Acidsighter
 	Bestiary: A large eye mutated by the Sulphurous Sea. Defeating this may allow its prey to come out of hiding.
 	BossChecklistIntegration.SpawnInfo: Use [i:CalRemix/PoisonedSclera] in the sulphurous sea at night
@@ -523,3 +523,4 @@ FrozenMummy.DisplayName: Frozen Mummy
 Fleshmullet.DisplayName: Fleshmullet
 LabRoach.DisplayName: Lab Roach
 FleshmulletEye.DisplayName: Fleshmullet Eye
+FunnyButterfly.DisplayName: The Butterfly Effect

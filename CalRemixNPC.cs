@@ -1184,6 +1184,10 @@ namespace CalRemix
                     NPC.NewNPC(npc.GetSource_Death(), (int)npc.Center.X, (int)npc.Center.Y, NPCID.Clothier);
                 }
             }
+            if (npc.type == ModContent.NPCType<Piggy>())
+            {
+                NPC.NewNPC(npc.GetSource_Death(), (int)npc.Center.X, (int)npc.Center.Y, NPCID.DukeFishron);
+            }
         }
         public override bool CheckDead(NPC npc)
         {
