@@ -71,6 +71,7 @@ using CalRemix.Content.NPCs.Subworlds.GreatSea;
 using CalRemix.UI.Anomaly109;
 using CalamityMod.Projectiles.Melee;
 using Mono.Cecil;
+using Terraria.WorldBuilding;
 
 namespace CalRemix
 {
@@ -231,6 +232,8 @@ namespace CalRemix
         public Particle ring;
         public Particle ring2;
         public Particle aura;
+
+        public bool GiftRed;
 
         // Weapons
         public int chainSawCharge;
@@ -1505,6 +1508,7 @@ namespace CalRemix
             fungiStone2 = false;
             cultacean = false;
             woodEmblem = false;
+            GiftRed = false;
 
             if (!Player.HasBuff<Calamitized>() && !NPC.AnyNPCs(NPCType<TheCalamity>()))
             {
@@ -1662,6 +1666,24 @@ namespace CalRemix
                 TwistedNetheriteHelmet helmet = Player.armor[0].ModItem as TwistedNetheriteHelmet;
                 target.AddBuff(BuffType<Wither>(), 120);
                 target.GetGlobalNPC<CalRemixNPC>().wither = helmet.souls;
+            }
+            if (GiftRed && proj.DamageType == DamageClass.Summon && proj.minion == true)
+            {
+                var source = proj.GetSource_FromThis();
+                Vector2 minionCenter = proj.Center;
+                Vector2 playerCenter = Main.LocalPlayer.Center;
+                if (Main.rand.NextBool(5))
+                {
+                    target.AddBuff(BuffID.Confused, 300, false);
+                }
+                if (Main.rand.NextBool(15))
+                {
+                    proj.Kill();
+                    Projectile.NewProjectile(source, (float)minionCenter.X, (float)minionCenter.Y, -5, -5, ProjectileType<GiftSymbioticWormH>(), 5, 0);
+                    Projectile.NewProjectile(source, (float)minionCenter.X, (float)minionCenter.Y, 5, 0, ProjectileType<GiftSymbioticWormH>(), 5, 0);
+                    Projectile.NewProjectile(source, (float)minionCenter.X, (float)minionCenter.Y, 0, -5, ProjectileType<GiftSymbioticWormI>(), 5, 0);
+                    WorldGen.FloatingIsland(500, 70); // REMOVE VERY SOON
+                }
             }
         }
 
