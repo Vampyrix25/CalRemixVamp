@@ -1,7 +1,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using CalamityMod.Rarities;
 
 namespace CalRemix.Content.Items.Materials
 {
@@ -14,7 +13,7 @@ namespace CalRemix.Content.Items.Materials
     	}
 		public override void SetDefaults()
 		{
-            Item.rare = ModContent.RarityType<Violet>();
+            Item.rare = ModContent.RarityType<TOTABlue>();
             Item.value = Item.sellPrice(gold: 5);
             Item.maxStack = 9999;
     	}

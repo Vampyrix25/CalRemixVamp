@@ -3115,6 +3115,10 @@ namespace CalRemix.Content.NPCs.Bosses.Noxus
             npcLoot.Add(ModContent.ItemType<NoxusSprayer>());
             DropHelper.NormalVsExpertQuantity(ModContent.ItemType<EntropicFrond>(), 1, 25, 35, 35, 45);
             DropHelper.NormalVsExpertQuantity(ModContent.ItemType<EntropicBar>(), 1, 15, 30, 25, 40);
+            npcLoot.AddNormalOnly(ModContent.ItemType<EntropicFrond>(), 1, 25, 35);
+            npcLoot.AddIf(() => Main.expertMode, ModContent.ItemType<EntropicFrond>(), 1, 35, 45);
+            npcLoot.AddNormalOnly(ModContent.ItemType<EntropicBar>(), 1, 15, 30);
+            npcLoot.AddIf(() => Main.expertMode, ModContent.ItemType<EntropicBar>(), 1, 25, 40);
 
             // Vanity and decorations.
             npcLoot.Add(ModContent.ItemType<NoxusMask>(), 7);

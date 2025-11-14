@@ -7,4 +7,9 @@ namespace CalRemix
     {
         public override Color RarityColor => Color.OrangeRed;
     }
+    public class TOTABlue : ModRarity
+    {
+        public override Color RarityColor => Color.LightSkyBlue;
+
+    }
 }

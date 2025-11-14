@@ -1,4 +1,3 @@
-using CalamityMod.Rarities;
 using CalRemix.Content.Items.Materials;
 using Terraria;
 using Terraria.ID;
@@ -29,7 +28,7 @@ namespace CalRemix.Content.Items.Potions.Recovery
             Item.consumable = true;
             Item.potion = true;
             Item.value = Item.buyPrice(0, 20, 0, 0);
-            Item.rare = ModContent.RarityType<Violet>();
+            Item.rare = ModContent.RarityType<TOTABlue>();
         }
 
         public override void AddRecipes()
