@@ -30,7 +30,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
     [AutoloadBossHead]
     public class SealedOne : ModNPC
     {
-        public override bool IsLoadingEnabled(Mod mod) => false;
+        //public override bool IsLoadingEnabled(Mod mod) => false;
 
         public ref float AttackType => ref NPC.ai[0];
         public ref float Timer => ref NPC.ai[1];
@@ -56,7 +56,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
             ProjectileVomit = 3,
             LightningOrb = 4,
             Ritual = 5,
-            Something = 6,
+            HereticSpears = 6,
             SpinningRingProjectiles = 7,
             AncientDoomEsqueMines = 8
         }
@@ -149,7 +149,9 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
             float lightningOrbSpeed = 4;
 
             int spinningProjDamage = NPC.GetAttackDamage_ForProjectiles(45f, 30f);
-            int spinningProjDuration = 120;
+            int spinningProjDuration = 280;
+            int spinningProjSpawnInterval = 20;
+            int spinningProjStopSpawningProjectilesInterval = spinningProjDuration - 140;
             int spinningProjTotalProjectiles = 3;
 
             int ritualTotalProjectiless = 12;
@@ -352,7 +354,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                                 attackToUse = (int)AttackTypes.None;
                                 break;
                             case 7:
-                                attackToUse = (int)AttackTypes.SpinningRingProjectiles;
+                                attackToUse = (int)AttackTypes.HereticSpears;
                                 break;
                             case 8:
                                 attackToUse = (int)AttackTypes.None;
@@ -426,6 +428,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                     }
                     #endregion
 
+                    /*
                     #region Ancient Doom Attack Replacement
                     // gradually increase chance of replacing an attack with ancient doom
                     int attackReplacementChance = 6;
@@ -440,9 +443,10 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                     // replace attack w ancient doom
                     if (expertMode && isPhase2 && Main.rand.NextBool(attackReplacementChance) && attackToUse != (int)AttackTypes.None && attackToUse != (int)AttackTypes.Ritual && attackToUse != (int)AttackTypes.SpinningRingProjectiles && NPC.CountNPCS(523) < 10)
                     {
-                        attackToUse = (int)AttackTypes.AncientDoomEsqueMines;
+                        //attackToUse = (int)AttackTypes.AncientDoomEsqueMines;
                     }
                     #endregion
+                    */
 
                     // get locations to lerp from and to, and set timer
                     if (attackToUse == (int)AttackTypes.None)
@@ -462,6 +466,7 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                     // final stuff: convert attacktouse to an attack to be used
                     if (attackToUse != (int)AttackTypes.PhaseTransition && attackToUse != (int)AttackTypes.None  && attackToUse != (int)AttackTypes.Move)
                     {
+                        //attackToUse = (int)AttackTypes.SpinningRingProjectiles;
                         AttackType = attackToUse;
                         Timer = 0f;
                     }
@@ -675,11 +680,59 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                     NPC.netUpdate = true;
                 }
             }
-            else if (AttackType == (float)AttackTypes.Something)
+            else if (AttackType == (float)AttackTypes.HereticSpears)
             {
+                float endAttackTime = 4 + projVomitFireRate * projVomitAmount;
+
                 NPC.localAI[2] = 13f;
+
+                // if starting or close to target, make up a new target
+                // having the failsafe be triggered by vector2.zero means he cant go to the top left of the world
+                // zzzzzzzzzzz
+                int flip = Main.rand.Next(0, 2);
+                if (flip == 0)
+                    flip = -1;
+
+                int boundingBoxHeight = 800;
+                int boundingBoxVerticalOffset = -boundingBoxHeight / 2;
+                int boundingBoxWidth = 400;
+                int boundingBoxHorizontalOffset = 300 * flip;
+                int boundingBoxHalfWidth = boundingBoxWidth / 2;
+                // making a "bounding box" of areas he can choose to go to
+                float lowerBound = Target.Center.Y - boundingBoxVerticalOffset;
+                float upperBound = Target.Center.Y - boundingBoxHeight - boundingBoxVerticalOffset;
+                float leftBound = Target.Center.X - boundingBoxHalfWidth + boundingBoxHorizontalOffset;
+                float rightBound = Target.Center.X + boundingBoxHalfWidth + boundingBoxHorizontalOffset;
+
+                /*
+                for (int i = 0; i < 20; i++)
+                {
+                    Dust.NewDustPerfect(new Vector2(Main.rand.NextFloat(leftBound, rightBound), Main.rand.NextFloat(lowerBound, upperBound)), DustID.BlueFairy, Vector2.Zero);
+                    Dust.NewDustPerfect(new Vector2(Main.rand.NextFloat(leftBound, rightBound), lowerBound), DustID.BlueFairy, Vector2.Zero);
+                    Dust.NewDustPerfect(new Vector2(Main.rand.NextFloat(leftBound, rightBound), upperBound), DustID.BlueFairy, Vector2.Zero);
+                    Dust.NewDustPerfect(new Vector2(leftBound, Main.rand.NextFloat(lowerBound, upperBound)), DustID.BlueFairy, Vector2.Zero);
+                    Dust.NewDustPerfect(new Vector2(rightBound, Main.rand.NextFloat(lowerBound, upperBound)), DustID.BlueFairy, Vector2.Zero);
+                }
+                */
+
+                // fire projs from sides of screen
+                if (Timer % 12 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    Vector2 spearSpawnSpot = new Vector2(Main.rand.NextFloat(leftBound, rightBound), Main.rand.NextFloat(lowerBound, upperBound));
+                    // play a sound
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), spearSpawnSpot.X, spearSpawnSpot.Y, 0, 0, ModContent.ProjectileType<HereticSpear>(), projVomitDamage, 0f, Main.myPlayer, 0, flip, 1);
+                }
+
+                // face left or right
+                int leftOrRight = Math.Sign(player.Center.X - npcCenter.X);
+                if (leftOrRight != 0)
+                {
+                    NPC.direction = (NPC.spriteDirection = leftOrRight);
+                }
+
                 Timer += 1f;
-                if (Timer >= 120f)
+
+                if (Timer >= 300f)
                 {
                     AttackType = (float)AttackTypes.None;
                     Timer = 0f;
@@ -692,13 +745,10 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
             {
                 NPC.localAI[2] = 11f;
 
-                if (Timer == 6)
+                if (Timer % spinningProjSpawnInterval == 0 && Timer <= spinningProjStopSpawningProjectilesInterval)
                 {
                     SoundEngine.PlaySound(SoundID.DD2_WitherBeastAuraPulse);
-                    for (int i = 0; i < spinningProjTotalProjectiles; i++)
-                    {
-                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<OrbitingOrb>(), spinningProjDamage, 0f, Main.myPlayer);
-                    }
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<OrbitingOrb>(), spinningProjDamage, 0f, Main.myPlayer);
                 }
 
                 Timer += 1f;
@@ -769,6 +819,38 @@ namespace CalRemix.Content.NPCs.Bosses.SealedOne
                     AttackTotal += 1f;
                     NPC.velocity = Vector2.Zero;
                     NPC.netUpdate = true;
+                }
+            }
+            
+            // projectile anti-rain
+            if (revengeance && isPhase4)
+            {
+                int boundingBoxHeight = 400;
+                int boundingBoxVerticalOffset = (-boundingBoxHeight / 2) - 800;
+                int boundingBoxWidth = 1800;
+                int boundingBoxHorizontalOffset = 0;
+                int boundingBoxHalfWidth = boundingBoxWidth / 2;
+                // making a "bounding box" of areas he can choose to go to
+                float lowerBound = Target.Center.Y - boundingBoxVerticalOffset;
+                float upperBound = Target.Center.Y - boundingBoxHeight - boundingBoxVerticalOffset;
+                float leftBound = Target.Center.X - boundingBoxHalfWidth + boundingBoxHorizontalOffset;
+                float rightBound = Target.Center.X + boundingBoxHalfWidth + boundingBoxHorizontalOffset;
+
+                /*
+                for (int i = 0; i < 20; i++)
+                {
+                    Dust.NewDustPerfect(new Vector2(Main.rand.NextFloat(leftBound, rightBound), Main.rand.NextFloat(lowerBound, upperBound)), DustID.BlueFairy, Vector2.Zero);
+                    Dust.NewDustPerfect(new Vector2(Main.rand.NextFloat(leftBound, rightBound), lowerBound), DustID.BlueFairy, Vector2.Zero);
+                    Dust.NewDustPerfect(new Vector2(Main.rand.NextFloat(leftBound, rightBound), upperBound), DustID.BlueFairy, Vector2.Zero);
+                    Dust.NewDustPerfect(new Vector2(leftBound, Main.rand.NextFloat(lowerBound, upperBound)), DustID.BlueFairy, Vector2.Zero);
+                    Dust.NewDustPerfect(new Vector2(rightBound, Main.rand.NextFloat(lowerBound, upperBound)), DustID.BlueFairy, Vector2.Zero);
+                }
+                */
+
+                if (Main.rand.NextBool(80))
+                {
+                    Vector2 flameSpawnSpot = new Vector2(Main.rand.NextFloat(leftBound, rightBound), Main.rand.NextFloat(lowerBound, upperBound));
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), flameSpawnSpot.X, flameSpawnSpot.Y, 0, 0, ModContent.ProjectileType<ChaoticFlame>(), projVomitDamage, 0f, Main.myPlayer);
                 }
             }
             #endregion

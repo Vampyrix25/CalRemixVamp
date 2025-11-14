@@ -163,6 +163,14 @@ namespace CalRemix
         public static readonly int RenoxPhase2 = Set("Stelliferous");
         public static readonly int RenoxPhase3 = Set("Degenerate");
 
+        // Vanilla Replacement 
+        public static readonly int BloodMoonRemix = Set("Misc/VanillaRemix/BloodMoon");
+        public static readonly int DesertRemix = Set("Misc/VanillaRemix/Desert");
+        public static readonly int DesertRemixles = Set("Misc/VanillaRemix/DesertVanilla");
+        public static readonly int QueenSlimeRemix = Set("Misc/VanillaRemix/QueenSlime");
+        public static readonly int ShimmerRemix = Set("Misc/VanillaRemix/Shimmer");
+        public static readonly int SulphSeaDayRemix = Set("Misc/VanillaRemix/probably-not-wasteland-by-dm-dokuro-unlisted-on-my-channel-for-my-playlists-and-such-128-ytshorts.savetube.me");
+
         // Misc
         public static readonly int Menu = Set("Misc/Menu");
         public static readonly int Menu2 = Set("Misc/Menu2");
