@@ -22,11 +22,28 @@ namespace CalRemix.Content.Projectiles.Weapons
             Projectile.ignoreWater = true;
             Projectile.DamageType = DamageClass.Magic;
         }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            
+        }
     }
     /*
     public class NocturnalTwo : ModProjectile
     {
-        
+        public override void SetDefaults()
+        {
+            Projectile.width = 12;
+            Projectile.height = 12;
+            Projectile.friendly = true;
+            Projectile.ignoreWater = true;
+            Projectile.DamageType = DamageClass.Magic;
+        }
+
+        public override void AI()
+        {
+            
+        }
     }
     public class NocturnalThree : ModProjectile
     {

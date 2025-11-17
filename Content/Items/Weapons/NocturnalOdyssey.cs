@@ -8,6 +8,7 @@ using CalRemix.Content.Projectiles.Weapons;
 using CalamityMod.Rarities;
 using CalRemix.Content.Items.Materials;
 using CalamityMod.Tiles.Furniture.CraftingStations;
+using CalRemix.Core;
 
 namespace CalRemix.Content.Items.Weapons
 {
@@ -23,7 +24,7 @@ namespace CalRemix.Content.Items.Weapons
 
             Item.width = 50;
             Item.height = 50;
-            Item.rare = ModContent.RarityType<Violet>();
+            Item.rare = ModContent.RarityType<TOTABlue>();
             Item.useTime = 120;
             Item.useAnimation = 120;
             Item.useStyle = ItemUseStyleID.Shoot;

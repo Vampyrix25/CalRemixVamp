@@ -1722,7 +1722,6 @@ namespace CalRemix
                     Projectile.NewProjectile(source, (float)minionCenter.X, (float)minionCenter.Y, -5, -5, ProjectileType<GiftSymbioticWormH>(), 5, 0);
                     Projectile.NewProjectile(source, (float)minionCenter.X, (float)minionCenter.Y, 5, 0, ProjectileType<GiftSymbioticWormH>(), 5, 0);
                     Projectile.NewProjectile(source, (float)minionCenter.X, (float)minionCenter.Y, 0, -5, ProjectileType<GiftSymbioticWormI>(), 5, 0);
-                    WorldGen.FloatingIsland(500, 70); // REMOVE VERY SOON
                 }
             }
         }
